@@ -43,27 +43,34 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Active link highlighting
     const sections = document.querySelectorAll('section');
-    const navItems = document.querySelectorAll('nav ul li a');
-    
+    let ticking = false;
     window.addEventListener('scroll', () => {
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        navItems.forEach(li => {
-            li.classList.remove('active');
-            if (li.getAttribute('href') === `#${current}`) {
-                li.classList.add('active');
-            }
-        });
-    });
     
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                let current = '';
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= (sectionTop - sectionHeight / 3)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(li => {
+                    li.classList.remove('active');
+                    if (li.getAttribute('href') === `#${current}`) {
+                        li.classList.add('active');
+                    }
+                });
+
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+
     // Animation for elements when they come into view
     const observerOptions = {
         root: null,
@@ -93,16 +100,4 @@ document.addEventListener('DOMContentLoaded', function() {
             this.src = '1.png'; // Fallback to local image if external fails
         });
     });
-    
-    // If video fails to load, show a static background
-    const video = document.querySelector('.hero-video video');
-    if (video) {
-        video.addEventListener('error', function() {
-            const container = document.querySelector('.hero-video');
-            container.style.backgroundImage = 'url("1.png")';
-            container.style.backgroundSize = 'cover';
-            container.style.backgroundPosition = 'center';
-            this.style.display = 'none';
-        });
-    }
 });
