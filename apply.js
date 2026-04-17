@@ -87,7 +87,7 @@ if (applicationForm) {
         };
 
         // Send data to Discord webhook
-        fetch("https://discord.com/api/webhooks/1418567487066214460/2uXKNNwgFEmoWI9iT9IKuNoa0vmJEMjJ4S4u-b9OLOAE49DM6VPAjA0ZsM92RXpcFGtf", {
+        fetch("https://script.google.com/macros/s/AKfycbxpA9nCIvL0w-_m9qjF4PcJEvWkpjOJLNTnATXYlKHQm123vqGSbWAjN7sYoxHM74o3/exec?gid=0", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
